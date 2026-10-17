@@ -195,11 +195,10 @@ GROUP BY st.season, st.total_nights, st.total_reservations;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['season', 'total_nights', 'total_reservations', 'occupancy_comparison']` | [('HIGH', 11068, Decimal('2592100'), 'Higher during Low Season'), ('LOW', 23171, Decimal('11417641'), 'Higher during Low Season')]. |
-
-
+| season | total_nights | total_reservations | occupancy_comparison |
+|---|---|---|---|
+| 'HIGH' | 11068 | 2592100 | 'Higher during Low Season' |
+| 'LOW' | 23171 | 11417641 | 'Higher during Low Season' |
 ---
 
 ## Question 5
@@ -294,11 +293,9 @@ FROM dev;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['correlation_coefficient']` | [(Decimal('-0.2623745766771795795089639914133612811330111788658210009401451497'),)]. |
-
-
+| correlation_coefficient |
+|---|
+| -0.2623745766771795795089639914133612811330111788658210009401451497 |
 ---
 
 ## Question 6

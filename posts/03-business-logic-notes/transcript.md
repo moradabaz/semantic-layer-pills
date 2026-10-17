@@ -94,11 +94,28 @@ ORDER BY total_revpan DESC;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['accommodation_id', 'total_revpan']` | [(220, Decimal('1006.01')), (227, Decimal('730.48')), (230, Decimal('687.94')), (233, Decimal('642.96')), (222, Decimal('560.65')), (235, Decimal('495.37')), (228, Decimal('491.04')), (236, Decimal('449.19')), (229, Decimal('423.37')), (231, Decimal('422.63')), (221, Decimal('402.77')), (237, Decimal('304.68')), (224, Decimal('303.53')), (218, Decimal('297.50')), (225, Decimal('244.61')), (232, Decimal('224.67')), (223, Decimal('215.00')), (219, Decimal('186.07')), (226, Decimal('134.66')), (234, Decimal('91.38'))]. |
-
-
+| accommodation_id | total_revpan |
+|---|---|
+| 220 | 1006.01 |
+| 227 | 730.48 |
+| 230 | 687.94 |
+| 233 | 642.96 |
+| 222 | 560.65 |
+| 235 | 495.37 |
+| 228 | 491.04 |
+| 236 | 449.19 |
+| 229 | 423.37 |
+| 231 | 422.63 |
+| 221 | 402.77 |
+| 237 | 304.68 |
+| 224 | 303.53 |
+| 218 | 297.50 |
+| 225 | 244.61 |
+| 232 | 224.67 |
+| 223 | 215.00 |
+| 219 | 186.07 |
+| 226 | 134.66 |
+| 234 | 91.38 |
 ---
 
 ## Question 2
@@ -127,11 +144,9 @@ WHERE accommodation_id = 15
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['cancelled_reservations']` | [(1,)]. |
-
-
+| cancelled_reservations |
+|---|
+| 1 |
 ---
 
 ## Question 3
@@ -176,11 +191,9 @@ WHERE da.property_manager_id = 9
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['occupancy_rate_pct']` | [(Decimal('11.1290322580645161'),)]. |
-
-
+| occupancy_rate_pct |
+|---|
+| 11.1290322580645161 |
 ---
 
 ## Question 4
@@ -283,11 +296,8 @@ WHERE m.tot_occ_nights > 0            -- avoid division‑by‑zero
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
+| accommodation_id | overall_adr | normalised_daily_cost |
 |---|---|---|
-| Success | `['accommodation_id', 'overall_adr', 'normalised_daily_cost']` | []. |
-
-
 ---
 
 ## Question 5
@@ -364,11 +374,9 @@ CROSS JOIN lost_rev lr;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
+| month_with_most_cancellations | cancelled_count | lost_revenue |
 |---|---|---|
-| Success | `['month_with_most_cancellations', 'cancelled_count', 'lost_revenue']` | [(datetime.date(2026, 2, 1), 2, Decimal('62284.22'))]. |
-
-
+| 2026-02-01 | 2 | 62284.22 |
 ---
 
 ## Question 6
@@ -396,11 +404,9 @@ WHERE property_manager_id = 26;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['accommodation_count']` | [(20,)]. |
-
-
+| accommodation_count |
+|---|
+| 20 |
 ---
 
 ## Resultados en tabla

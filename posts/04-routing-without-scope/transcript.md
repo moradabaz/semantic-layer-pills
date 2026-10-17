@@ -195,11 +195,9 @@ WHERE
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['occupancy_rate_pct']` | [(Decimal('11.1300000000000000'),)]. |
-
-
+| occupancy_rate_pct |
+|---|
+| 11.1300000000000000 |
 ---
 
 ## Question 4
@@ -356,11 +354,23 @@ WHERE cc.cancelled_count = (
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
+| month | cancelled_count | lost_revenue |
 |---|---|---|
-| Success | `['month', 'cancelled_count', 'lost_revenue']` | [(datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 5, 1), 2, Decimal('58223.90')), (datetime.date(2026, 8, 1), 2, Decimal('44628.81')), (datetime.date(2025, 10, 1), 2, Decimal('46164.30')), (datetime.date(2025, 9, 1), 2, Decimal('51502.68')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2025, 11, 1), 2, Decimal('49429.03')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 4, 1), 2, Decimal('63002.25'))]. |
-
-
+| 2026-02-01 | 2 | 62284.22 |
+| 2026-01-01 | 2 | 61605.58 |
+| 2026-07-01 | 2 | 53587.96 |
+| 2026-02-01 | 2 | 62284.22 |
+| 2026-05-01 | 2 | 58223.90 |
+| 2026-08-01 | 2 | 44628.81 |
+| 2025-10-01 | 2 | 46164.30 |
+| 2025-09-01 | 2 | 51502.68 |
+| 2026-03-01 | 2 | 57924.50 |
+| 2025-11-01 | 2 | 49429.03 |
+| 2026-07-01 | 2 | 53587.96 |
+| 2026-03-01 | 2 | 57924.50 |
+| 2026-03-01 | 2 | 57924.50 |
+| 2026-01-01 | 2 | 61605.58 |
+| 2026-04-01 | 2 | 63002.25 |
 ---
 
 ## Question 6
@@ -410,11 +420,9 @@ WHERE property_manager_id = 26;
 
 **Execution outcome:**
 
-| Estado | Columnas | Filas devueltas |
-|---|---|---|
-| Success | `['accommodation_count']` | [(20,)]. |
-
-
+| accommodation_count |
+|---|
+| 20 |
 ---
 
 ## Resultados en tabla
