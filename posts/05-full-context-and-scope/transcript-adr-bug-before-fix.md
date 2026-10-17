@@ -44,7 +44,7 @@ Notes: mart_kpi/mart_aggregates only have accommodation_id, not property_manager
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- Total RevPAN per accommodation for property manager 20
 SELECT
@@ -64,7 +64,7 @@ ORDER BY
 ```
 
 This query sums the `revpan` values from `mart_kpi` for each accommodation belonging to property manager 20, grouping by `accommodation_id`. Replace the `ORDER BY` clause with any desired ordering.
-```
+````
 
 **Extracted SQL:** `-- Total RevPAN per accommodation for property manager 20
 SELECT
@@ -115,14 +115,14 @@ Notes: Row-level listing OR a per-accommodation/lifetime count (e.g. "how many c
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
 WHERE accommodation_id = 15
   AND status = 'cancelled';
 ```
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
@@ -175,7 +175,7 @@ Notes: mart_kpi/mart_aggregates only have accommodation_id, not property_manager
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- Occupancy rate for property manager 9 in August 2026
 SELECT
@@ -187,7 +187,7 @@ WHERE dim.property_manager_id = 9
   AND kpi.month >= DATE '2026-08-01'
   AND kpi.month <  DATE '2026-09-01';
 ```
-```
+````
 
 **Extracted SQL:** `-- Occupancy rate for property manager 9 in August 2026
 SELECT
@@ -256,7 +256,7 @@ A plain total_cost vs SUM(revenue) comparison (no per-night normalization) is NO
 
 **Raw model response:**
 
-```
+````
 **SQL**
 
 ```sql
@@ -304,7 +304,7 @@ ORDER BY a.accommodation_id;
 4. The final `SELECT` lists every accommodation whose ADR (last‑3‑month average) is *lower* than its normalised cost per night.  
 
 > **Caveat** – Because the ADR window is the last 3 months while the cost window covers the entire lifetime since the property was listed, the comparison is only approximate and should be interpreted with that context in mind.
-```
+````
 
 **Extracted SQL:** `WITH
     /* Total available nights for each accommodation (every month recorded so far) */
@@ -383,7 +383,7 @@ Notes: "Lost revenue" is not a precomputed KPI in any mart -- compute it directl
 
 **Raw model response:**
 
-```
+````
 ```sql
 WITH cancelled_rev AS (
     SELECT
@@ -407,7 +407,7 @@ LIMIT 1;
 ```
 
 This query returns the month with the highest number of cancelled reservations, along with the count of cancelations in that month and the total lost revenue from those cancellations.
-```
+````
 
 **Extracted SQL:** `WITH cancelled_rev AS (
     SELECT
@@ -462,13 +462,13 @@ Notes: Deliberately the simplest question type -- a plain COUNT(*) on dim_accomm
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS accommodation_count
 FROM public_marts.dim_accommodation
 WHERE property_manager_id = 26;
 ```
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS accommodation_count
 FROM public_marts.dim_accommodation

@@ -95,7 +95,7 @@ Notes: season is a reservation-level dimension, same reasoning as channel above 
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- Occupancy comparison (total nights booked) between High Season and Low Season
 WITH confirmed AS (
@@ -133,7 +133,7 @@ This query:
 2. **Aggregates** total nights and number of reservations per season.  
 3. **Compares** the aggregated values for “High Season” vs. “Low Season” and returns a label indicating which season has the higher summed occupancy (by total booked nights).  
 4. The results also show the raw totals for each season, so you can see the numbers behind the comparison.
-```
+````
 
 **Extracted SQL:** `-- Occupancy comparison (total nights booked) between High Season and Low Season
 WITH confirmed AS (
@@ -194,7 +194,7 @@ Notes: Direct read from mart_kpi. No joins needed.
 
 **Raw model response:**
 
-```
+````
 **Correlation between occupancy rate and cancellation rate**
 
 ```sql
@@ -228,7 +228,7 @@ The returned `correlation_coefficient` will indicate whether stricter occupancy 
 * **Positive value** – stricter rules tend to coincide with *more* cancellations.
 * **Negative value** – stricter rules tend to coincide with *fewer* cancellations.
 * **Near zero** – little or no linear relationship.
-```
+````
 
 **Extracted SQL:** `--   1. Compute the mean occupancy and cancellation rates
 --   2. Derive deviations from those means

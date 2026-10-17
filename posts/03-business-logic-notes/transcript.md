@@ -62,7 +62,7 @@ Table: public_marts.dim_accommodation
 
 **Raw model response:**
 
-```
+````
 ```sql
 /* Total RevPAN for each accommodation belonging to property manager 20 */
 SELECT
@@ -75,7 +75,7 @@ WHERE d.property_manager_id = 20
 GROUP BY d.accommodation_id
 ORDER BY total_revpan DESC;
 ```
-```
+````
 
 **Extracted SQL:** `/* Total RevPAN for each accommodation belonging to property manager 20 */
 SELECT
@@ -98,14 +98,14 @@ ORDER BY total_revpan DESC;`
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
 WHERE accommodation_id = 15
   AND status = 'cancelled';
 ```
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
@@ -122,7 +122,7 @@ WHERE accommodation_id = 15
 
 **Raw model response:**
 
-```
+````
 ```sql
 /* Occupancy rate for the properties managed by property_manager_id = 9
    in August 2026 (first day of the month).  The rate is calculated as
@@ -138,7 +138,7 @@ WHERE da.property_manager_id = 9
 ```
 
 This returns a single numeric value (or `NULL` if the manager had no available nights in that month).
-```
+````
 
 **Extracted SQL:** `/* Occupancy rate for the properties managed by property_manager_id = 9
    in August 2026 (first day of the month).  The rate is calculated as
@@ -162,7 +162,7 @@ WHERE da.property_manager_id = 9
 
 **Raw model response:**
 
-```
+````
 ```sql
 /* Accommodations whose ADR is lower than their normalized daily cost
    for the most recent three calendar months.  We compute a "normalized
@@ -207,7 +207,7 @@ WHERE m.tot_occ_nights > 0            -- avoid division‑by‑zero
 ```
 
 This returns the set of `accommodation_id`s (with their ADR and the corresponding normalized daily cost) for which the ADR is strictly lower than the cost per available night over the last three months.
-```
+````
 
 **Extracted SQL:** `/* Accommodations whose ADR is lower than their normalized daily cost
    for the most recent three calendar months.  We compute a "normalized
@@ -260,7 +260,7 @@ WHERE m.tot_occ_nights > 0            -- avoid division‑by‑zero
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- 1. Determine the month with most cancelled reservations
 WITH max_cancelled_month AS (
@@ -295,7 +295,7 @@ CROSS JOIN lost_rev lr;
 * The final SELECT returns the month, the number of cancelled reservations, and the total lost revenue for that month.
 
 The query is read‑only, self‑contained, and uses only the tables described.
-```
+````
 
 **Extracted SQL:** `-- 1. Determine the month with most cancelled reservations
 WITH max_cancelled_month AS (
@@ -332,14 +332,14 @@ CROSS JOIN lost_rev lr;`
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS accommodation_count
 FROM public_marts.dim_accommodation
 WHERE property_manager_id = 26;
 ```
 This query returns the number of accommodations managed by property manager 26.
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS accommodation_count
 FROM public_marts.dim_accommodation

@@ -58,7 +58,7 @@ Table: public_marts.dim_accommodation
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- Total RevPAN per accommodation for property manager 20
 SELECT
@@ -71,7 +71,7 @@ WHERE d.property_manager_id = 20
 GROUP BY k.accommodation_id
 ORDER BY total_revpan DESC;
 ```
-```
+````
 
 **Extracted SQL:** `-- Total RevPAN per accommodation for property manager 20
 SELECT
@@ -94,14 +94,14 @@ ORDER BY total_revpan DESC;`
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS cancelled_count
 FROM public_marts.fct_reservation
 WHERE accommodation_id = 15
   AND status = 'cancelled';
 ```
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS cancelled_count
 FROM public_marts.fct_reservation
@@ -118,7 +118,7 @@ WHERE accommodation_id = 15
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT
     ROUND(
@@ -139,7 +139,7 @@ This query:
 2. **Joins** to `dim_accommodation` to keep only accommodations managed by property manager 9.
 3. **Calculates** the manager‑wide occupancy rate as the weighted average of occupied nights over available nights.  
    The result is expressed as a percentage rounded to two decimal places.
-```
+````
 
 **Extracted SQL:** `SELECT
     ROUND(
@@ -163,7 +163,7 @@ WHERE d.property_manager_id = 9
 
 **Raw model response:**
 
-```
+````
 Here’s a single read‑only query that pulls the data you asked for.
 
 ```sql
@@ -219,7 +219,7 @@ ORDER BY l.avg_adr;
    * Keeps only those accommodations where this cost exceeds the average ADR.
 
 Feel free to tweak the `ORDER BY` or add the manager/city columns if you’d like more context.
-```
+````
 
 **Extracted SQL:** `WITH last3 AS (
     /* 1️⃣  ADR and capacity for the past three calendar months  */
@@ -268,7 +268,7 @@ ORDER BY l.avg_adr;`
 
 **Raw model response:**
 
-```
+````
 ```sql
 -- Month with the highest number of cancelled reservations (and its lost revenue)
 WITH cancelled AS (
@@ -299,7 +299,7 @@ LIMIT 1;
 - `month_start` – the first day of the month that had the most cancellations.  
 - `cancelled_cnt` – the number of cancelled reservations in that month.  
 - `lost_rev` – the total lost revenue (cancellation loss) for that month.
-```
+````
 
 **Extracted SQL:** `-- Month with the highest number of cancelled reservations (and its lost revenue)
 WITH cancelled AS (
@@ -329,13 +329,13 @@ LIMIT 1;`
 
 **Raw model response:**
 
-```
+````
 ```sql
 SELECT COUNT(*) AS num_accommodations
 FROM public_marts.dim_accommodation
 WHERE property_manager_id = 26;
 ```
-```
+````
 
 **Extracted SQL:** `SELECT COUNT(*) AS num_accommodations
 FROM public_marts.dim_accommodation
