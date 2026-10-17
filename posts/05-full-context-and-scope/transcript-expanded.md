@@ -8,9 +8,18 @@ Generated 2026-08-21T21:40:28.727875+00:00. Model: openai/gpt-oss-20b (via NVIDI
 
 **Matched question_type:** (none -- fallback)
 
-**Extracted SQL:** (none)
+**Extracted SQL:**
 
-**Execution outcome:** I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from?
+```sql
+-- No SQL extracted from the model response.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Fallback | I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from? |
+
 
 ---
 
@@ -20,9 +29,18 @@ Generated 2026-08-21T21:40:28.727875+00:00. Model: openai/gpt-oss-20b (via NVIDI
 
 **Matched question_type:** (none -- fallback)
 
-**Extracted SQL:** (none)
+**Extracted SQL:**
 
-**Execution outcome:** I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from?
+```sql
+-- No SQL extracted from the model response.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Fallback | I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from? |
+
 
 ---
 
@@ -57,11 +75,18 @@ I’m sorry, but the `public_marts.mart_kpi` table you can query does not contai
 Because of that, there’s no way to compute or compare cancellation rates by channel from the data available to me. If you have another table that includes channel information, I can combine it with `mart_kpi` to answer your question.
 ```
 
-**Extracted SQL:** `with `mart_kpi` to answer your question.`
+**Extracted SQL:**
 
-**Execution outcome:** Postgres error: syntax error at or near "`"
-LINE 1: with `mart_kpi` to answer your question.
-             ^
+```sql
+with `mart_kpi` to answer your question.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Error | Postgres error: syntax error at or near "`" LINE 1: with `mart_kpi` to answer your question. ^ |
+
 
 
 ---
@@ -135,7 +160,10 @@ This query:
 4. The results also show the raw totals for each season, so you can see the numbers behind the comparison.
 ````
 
-**Extracted SQL:** `-- Occupancy comparison (total nights booked) between High Season and Low Season
+**Extracted SQL:**
+
+```sql
+-- Occupancy comparison (total nights booked) between High Season and Low Season
 WITH confirmed AS (
     SELECT
         season,
@@ -162,9 +190,15 @@ SELECT
         ELSE 'Higher during Low Season'
     END AS occupancy_comparison
 FROM season_totals st
-GROUP BY st.season, st.total_nights, st.total_reservations;`
+GROUP BY st.season, st.total_nights, st.total_reservations;
+```
 
-**Execution outcome:** Success. Columns: ['season', 'total_nights', 'total_reservations', 'occupancy_comparison']. Rows (2, capped at 500): [('HIGH', 11068, Decimal('2592100'), 'Higher during Low Season'), ('LOW', 23171, Decimal('11417641'), 'Higher during Low Season')].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['season', 'total_nights', 'total_reservations', 'occupancy_comparison']` | [('HIGH', 11068, Decimal('2592100'), 'Higher during Low Season'), ('LOW', 23171, Decimal('11417641'), 'Higher during Low Season')]. |
+
 
 ---
 
@@ -230,7 +264,10 @@ The returned `correlation_coefficient` will indicate whether stricter occupancy 
 * **Near zero** – little or no linear relationship.
 ````
 
-**Extracted SQL:** `--   1. Compute the mean occupancy and cancellation rates
+**Extracted SQL:**
+
+```sql
+--   1. Compute the mean occupancy and cancellation rates
 --   2. Derive deviations from those means
 --   3. Compute the Pearson correlation coefficient
 
@@ -252,9 +289,15 @@ dev AS (
 SELECT
     SUM(d_occ * d_can) /
     NULLIF(SQRT(SUM(d_occ * d_occ) * SUM(d_can * d_can)), 0) AS correlation_coefficient
-FROM dev;`
+FROM dev;
+```
 
-**Execution outcome:** Success. Columns: ['correlation_coefficient']. Rows (1, capped at 500): [(Decimal('-0.2623745766771795795089639914133612811330111788658210009401451497'),)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['correlation_coefficient']` | [(Decimal('-0.2623745766771795795089639914133612811330111788658210009401451497'),)]. |
+
 
 ---
 
@@ -264,9 +307,18 @@ FROM dev;`
 
 **Matched question_type:** (none -- fallback)
 
-**Extracted SQL:** (none)
+**Extracted SQL:**
 
-**Execution outcome:** I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from?
+```sql
+-- No SQL extracted from the model response.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Fallback | I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from? |
+
 
 ---
 

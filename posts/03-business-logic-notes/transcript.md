@@ -77,7 +77,10 @@ ORDER BY total_revpan DESC;
 ```
 ````
 
-**Extracted SQL:** `/* Total RevPAN for each accommodation belonging to property manager 20 */
+**Extracted SQL:**
+
+```sql
+/* Total RevPAN for each accommodation belonging to property manager 20 */
 SELECT
     d.accommodation_id,
     SUM(mk.revpan) AS total_revpan
@@ -86,9 +89,15 @@ JOIN public_marts.dim_accommodation  AS d
   ON mk.accommodation_id = d.accommodation_id
 WHERE d.property_manager_id = 20
 GROUP BY d.accommodation_id
-ORDER BY total_revpan DESC;`
+ORDER BY total_revpan DESC;
+```
 
-**Execution outcome:** Success. Columns: ['accommodation_id', 'total_revpan']. Rows (20, capped at 500): [(220, Decimal('1006.01')), (227, Decimal('730.48')), (230, Decimal('687.94')), (233, Decimal('642.96')), (222, Decimal('560.65')), (235, Decimal('495.37')), (228, Decimal('491.04')), (236, Decimal('449.19')), (229, Decimal('423.37')), (231, Decimal('422.63')), (221, Decimal('402.77')), (237, Decimal('304.68')), (224, Decimal('303.53')), (218, Decimal('297.50')), (225, Decimal('244.61')), (232, Decimal('224.67')), (223, Decimal('215.00')), (219, Decimal('186.07')), (226, Decimal('134.66')), (234, Decimal('91.38'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_id', 'total_revpan']` | [(220, Decimal('1006.01')), (227, Decimal('730.48')), (230, Decimal('687.94')), (233, Decimal('642.96')), (222, Decimal('560.65')), (235, Decimal('495.37')), (228, Decimal('491.04')), (236, Decimal('449.19')), (229, Decimal('423.37')), (231, Decimal('422.63')), (221, Decimal('402.77')), (237, Decimal('304.68')), (224, Decimal('303.53')), (218, Decimal('297.50')), (225, Decimal('244.61')), (232, Decimal('224.67')), (223, Decimal('215.00')), (219, Decimal('186.07')), (226, Decimal('134.66')), (234, Decimal('91.38'))]. |
+
 
 ---
 
@@ -107,12 +116,21 @@ WHERE accommodation_id = 15
 ```
 ````
 
-**Extracted SQL:** `SELECT COUNT(*) AS cancelled_reservations
+**Extracted SQL:**
+
+```sql
+SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
 WHERE accommodation_id = 15
-  AND status = 'cancelled';`
+  AND status = 'cancelled';
+```
 
-**Execution outcome:** Success. Columns: ['cancelled_reservations']. Rows (1, capped at 500): [(1,)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['cancelled_reservations']` | [(1,)]. |
+
 
 ---
 
@@ -140,7 +158,10 @@ WHERE da.property_manager_id = 9
 This returns a single numeric value (or `NULL` if the manager had no available nights in that month).
 ````
 
-**Extracted SQL:** `/* Occupancy rate for the properties managed by property_manager_id = 9
+**Extracted SQL:**
+
+```sql
+/* Occupancy rate for the properties managed by property_manager_id = 9
    in August 2026 (first day of the month).  The rate is calculated as
    100 × (total occupied nights) ÷ (total available nights) across all
    that manager's accommodations. */
@@ -150,9 +171,15 @@ FROM public_marts.mart_aggregates AS ma
 JOIN public_marts.dim_accommodation AS da
   ON ma.accommodation_id = da.accommodation_id
 WHERE da.property_manager_id = 9
-  AND ma.month = '2026-08-01';`
+  AND ma.month = '2026-08-01';
+```
 
-**Execution outcome:** Success. Columns: ['occupancy_rate_pct']. Rows (1, capped at 500): [(Decimal('11.1290322580645161'),)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['occupancy_rate_pct']` | [(Decimal('11.1290322580645161'),)]. |
+
 
 ---
 
@@ -209,7 +236,10 @@ WHERE m.tot_occ_nights > 0            -- avoid division‑by‑zero
 This returns the set of `accommodation_id`s (with their ADR and the corresponding normalized daily cost) for which the ADR is strictly lower than the cost per available night over the last three months.
 ````
 
-**Extracted SQL:** `/* Accommodations whose ADR is lower than their normalized daily cost
+**Extracted SQL:**
+
+```sql
+/* Accommodations whose ADR is lower than their normalized daily cost
    for the most recent three calendar months.  We compute a "normalized
    cost per day" as total lifetime cost divided by the sum of
    available nights in the same period.  The ADR is taken as the overall
@@ -248,9 +278,15 @@ WHERE m.tot_occ_nights > 0            -- avoid division‑by‑zero
   AND m.tot_avail_nights > 0
   AND c.total_cost IS NOT NULL
   AND m.tot_revenue / NULLIF(m.tot_occ_nights,0)
-        < c.total_cost / NULLIF(m.tot_avail_nights,0);`
+        < c.total_cost / NULLIF(m.tot_avail_nights,0);
+```
 
-**Execution outcome:** Success. Columns: ['accommodation_id', 'overall_adr', 'normalised_daily_cost']. Rows (0, capped at 500): [].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_id', 'overall_adr', 'normalised_daily_cost']` | []. |
+
 
 ---
 
@@ -297,7 +333,10 @@ CROSS JOIN lost_rev lr;
 The query is read‑only, self‑contained, and uses only the tables described.
 ````
 
-**Extracted SQL:** `-- 1. Determine the month with most cancelled reservations
+**Extracted SQL:**
+
+```sql
+-- 1. Determine the month with most cancelled reservations
 WITH max_cancelled_month AS (
     SELECT month,
            cancelled_count
@@ -320,9 +359,15 @@ SELECT
     mc.cancelled_count,
     lr.lost_revenue
 FROM max_cancelled_month mc
-CROSS JOIN lost_rev lr;`
+CROSS JOIN lost_rev lr;
+```
 
-**Execution outcome:** Success. Columns: ['month_with_most_cancellations', 'cancelled_count', 'lost_revenue']. Rows (1, capped at 500): [(datetime.date(2026, 2, 1), 2, Decimal('62284.22'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['month_with_most_cancellations', 'cancelled_count', 'lost_revenue']` | [(datetime.date(2026, 2, 1), 2, Decimal('62284.22'))]. |
+
 
 ---
 
@@ -341,11 +386,20 @@ WHERE property_manager_id = 26;
 This query returns the number of accommodations managed by property manager 26.
 ````
 
-**Extracted SQL:** `SELECT COUNT(*) AS accommodation_count
-FROM public_marts.dim_accommodation
-WHERE property_manager_id = 26;`
+**Extracted SQL:**
 
-**Execution outcome:** Success. Columns: ['accommodation_count']. Rows (1, capped at 500): [(20,)].
+```sql
+SELECT COUNT(*) AS accommodation_count
+FROM public_marts.dim_accommodation
+WHERE property_manager_id = 26;
+```
+
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_count']` | [(20,)]. |
+
 
 ---
 

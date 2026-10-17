@@ -66,7 +66,10 @@ ORDER BY
 This query sums the `revpan` values from `mart_kpi` for each accommodation belonging to property manager 20, grouping by `accommodation_id`. Replace the `ORDER BY` clause with any desired ordering.
 ````
 
-**Extracted SQL:** `-- Total RevPAN per accommodation for property manager 20
+**Extracted SQL:**
+
+```sql
+-- Total RevPAN per accommodation for property manager 20
 SELECT
     a.accommodation_id,
     SUM(k.revpan) AS total_revpan
@@ -80,9 +83,15 @@ WHERE
 GROUP BY
     a.accommodation_id
 ORDER BY
-    total_revpan DESC;   -- optional: highest revenue first`
+    total_revpan DESC;   -- optional: highest revenue first
+```
 
-**Execution outcome:** Success. Columns: ['accommodation_id', 'total_revpan']. Rows (20, capped at 500): [(220, Decimal('1006.01')), (227, Decimal('730.48')), (230, Decimal('687.94')), (233, Decimal('642.96')), (222, Decimal('560.65')), (235, Decimal('495.37')), (228, Decimal('491.04')), (236, Decimal('449.19')), (229, Decimal('423.37')), (231, Decimal('422.63')), (221, Decimal('402.77')), (237, Decimal('304.68')), (224, Decimal('303.53')), (218, Decimal('297.50')), (225, Decimal('244.61')), (232, Decimal('224.67')), (223, Decimal('215.00')), (219, Decimal('186.07')), (226, Decimal('134.66')), (234, Decimal('91.38'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_id', 'total_revpan']` | [(220, Decimal('1006.01')), (227, Decimal('730.48')), (230, Decimal('687.94')), (233, Decimal('642.96')), (222, Decimal('560.65')), (235, Decimal('495.37')), (228, Decimal('491.04')), (236, Decimal('449.19')), (229, Decimal('423.37')), (231, Decimal('422.63')), (221, Decimal('402.77')), (237, Decimal('304.68')), (224, Decimal('303.53')), (218, Decimal('297.50')), (225, Decimal('244.61')), (232, Decimal('224.67')), (223, Decimal('215.00')), (219, Decimal('186.07')), (226, Decimal('134.66')), (234, Decimal('91.38'))]. |
+
 
 ---
 
@@ -124,12 +133,21 @@ WHERE accommodation_id = 15
 ```
 ````
 
-**Extracted SQL:** `SELECT COUNT(*) AS cancelled_reservations
+**Extracted SQL:**
+
+```sql
+SELECT COUNT(*) AS cancelled_reservations
 FROM public_marts.fct_reservation
 WHERE accommodation_id = 15
-  AND status = 'cancelled';`
+  AND status = 'cancelled';
+```
 
-**Execution outcome:** Success. Columns: ['cancelled_reservations']. Rows (1, capped at 500): [(1,)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['cancelled_reservations']` | [(1,)]. |
+
 
 ---
 
@@ -189,7 +207,10 @@ WHERE dim.property_manager_id = 9
 ```
 ````
 
-**Extracted SQL:** `-- Occupancy rate for property manager 9 in August 2026
+**Extracted SQL:**
+
+```sql
+-- Occupancy rate for property manager 9 in August 2026
 SELECT
     ROUND(AVG(kpi.occupancy_rate_pct), 2) AS occupancy_rate_pct
 FROM public_marts.mart_kpi AS kpi
@@ -197,9 +218,15 @@ JOIN public_marts.dim_accommodation AS dim
       ON kpi.accommodation_id = dim.accommodation_id
 WHERE dim.property_manager_id = 9
   AND kpi.month >= DATE '2026-08-01'
-  AND kpi.month <  DATE '2026-09-01';`
+  AND kpi.month <  DATE '2026-09-01';
+```
 
-**Execution outcome:** Success. Columns: ['occupancy_rate_pct']. Rows (1, capped at 500): [(Decimal('11.13'),)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['occupancy_rate_pct']` | [(Decimal('11.13'),)]. |
+
 
 ---
 
@@ -306,7 +333,10 @@ ORDER BY a.accommodation_id;
 > **Caveat** – Because the ADR window is the last 3 months while the cost window covers the entire lifetime since the property was listed, the comparison is only approximate and should be interpreted with that context in mind.
 ````
 
-**Extracted SQL:** `WITH
+**Extracted SQL:**
+
+```sql
+WITH
     /* Total available nights for each accommodation (every month recorded so far) */
     lifetime_available AS (
         SELECT accommodation_id,
@@ -339,9 +369,15 @@ SELECT  a.accommodation_id,
 FROM   adr_last_3_months      a
 JOIN   normalised_cost        n USING (accommodation_id)
 WHERE  a.adr < n.cost_per_night
-ORDER BY a.accommodation_id;`
+ORDER BY a.accommodation_id;
+```
 
-**Execution outcome:** Success. Columns: ['accommodation_id', 'adr', 'cost_per_night']. Rows (29, capped at 500): [(31, Decimal('0E-20'), Decimal('0.81976793248945147679')), (44, Decimal('0E-20'), Decimal('0.15212814645308924485')), (47, Decimal('0E-20'), Decimal('0.72203562340966921120')), (48, Decimal('0E-20'), Decimal('0.78965986394557823129')), (57, Decimal('0E-20'), Decimal('0.34620758483033932136')), (114, Decimal('0E-20'), Decimal('0.56663755458515283843')), (129, Decimal('0E-20'), Decimal('0.07864806866952789700')), (162, Decimal('0E-20'), Decimal('0.37991525423728813559')), (163, Decimal('0E-20'), Decimal('0.16189189189189189189')), (183, Decimal('0E-20'), Decimal('0.36413301662707838480')), (218, Decimal('0E-20'), Decimal('0.69055803571428571429')), (270, Decimal('0E-20'), Decimal('0.73930555555555555556')), (273, Decimal('0E-20'), Decimal('0.15233532934131736527')), (350, Decimal('0E-20'), Decimal('0.09141987829614604462')), (358, Decimal('0E-20'), Decimal('0.68901075268817204301')), (385, Decimal('0E-20'), Decimal('0.85406315789473684211')), (387, Decimal('0E-20'), Decimal('0.84625806451612903226')), (393, Decimal('0E-20'), Decimal('0.73023305084745762712')), (415, Decimal('0E-20'), Decimal('0.59846960167714884696')), (416, Decimal('0E-20'), Decimal('0.15302083333333333333')), (419, Decimal('0E-20'), Decimal('0.36264192139737991266')), (422, Decimal('0E-20'), Decimal('0.79582608695652173913')), (440, Decimal('0E-20'), Decimal('0.86015695067264573991')), (453, Decimal('0E-20'), Decimal('0.78256410256410256410')), (476, Decimal('0E-20'), Decimal('0.19253863134657836645')), (526, Decimal('0.55967391304347826087'), Decimal('1.6476811594202899')), (560, Decimal('0E-20'), Decimal('0.23146881287726358149')), (578, Decimal('0E-20'), Decimal('1.2225854700854701')), (594, Decimal('0E-20'), Decimal('0.15488659793814432990'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_id', 'adr', 'cost_per_night']` | [(31, Decimal('0E-20'), Decimal('0.81976793248945147679')), (44, Decimal('0E-20'), Decimal('0.15212814645308924485')), (47, Decimal('0E-20'), Decimal('0.72203562340966921120')), (48, Decimal('0E-20'), Decimal('0.78965986394557823129')), (57, Decimal('0E-20'), Decimal('0.34620758483033932136')), (114, Decimal('0E-20'), Decimal('0.56663755458515283843')), (129, Decimal('0E-20'), Decimal('0.07864806866952789700')), (162, Decimal('0E-20'), Decimal('0.37991525423728813559')), (163, Decimal('0E-20'), Decimal('0.16189189189189189189')), (183, Decimal('0E-20'), Decimal('0.36413301662707838480')), (218, Decimal('0E-20'), Decimal('0.69055803571428571429')), (270, Decimal('0E-20'), Decimal('0.73930555555555555556')), (273, Decimal('0E-20'), Decimal('0.15233532934131736527')), (350, Decimal('0E-20'), Decimal('0.09141987829614604462')), (358, Decimal('0E-20'), Decimal('0.68901075268817204301')), (385, Decimal('0E-20'), Decimal('0.85406315789473684211')), (387, Decimal('0E-20'), Decimal('0.84625806451612903226')), (393, Decimal('0E-20'), Decimal('0.73023305084745762712')), (415, Decimal('0E-20'), Decimal('0.59846960167714884696')), (416, Decimal('0E-20'), Decimal('0.15302083333333333333')), (419, Decimal('0E-20'), Decimal('0.36264192139737991266')), (422, Decimal('0E-20'), Decimal('0.79582608695652173913')), (440, Decimal('0E-20'), Decimal('0.86015695067264573991')), (453, Decimal('0E-20'), Decimal('0.78256410256410256410')), (476, Decimal('0E-20'), Decimal('0.19253863134657836645')), (526, Decimal('0.55967391304347826087'), Decimal('1.6476811594202899')), (560, Decimal('0E-20'), Decimal('0.23146881287726358149')), (578, Decimal('0E-20'), Decimal('1.2225854700854701')), (594, Decimal('0E-20'), Decimal('0.15488659793814432990'))]. |
+
 
 ---
 
@@ -409,7 +445,10 @@ LIMIT 1;
 This query returns the month with the highest number of cancelled reservations, along with the count of cancelations in that month and the total lost revenue from those cancellations.
 ````
 
-**Extracted SQL:** `WITH cancelled_rev AS (
+**Extracted SQL:**
+
+```sql
+WITH cancelled_rev AS (
     SELECT
         -- truncate the start date to the month for grouping
         DATE_TRUNC('month', start_date)::date AS month,
@@ -427,9 +466,15 @@ FROM cancelled_rev cr
 JOIN public_marts.mart_aggregates ma
   ON cr.month = ma.month
 ORDER BY ma.cancelled_count DESC, cr.lost_revenue DESC
-LIMIT 1;`
+LIMIT 1;
+```
 
-**Execution outcome:** Success. Columns: ['month', 'cancelled_count', 'lost_revenue']. Rows (1, capped at 500): [(datetime.date(2026, 4, 1), 2, Decimal('63002.25'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['month', 'cancelled_count', 'lost_revenue']` | [(datetime.date(2026, 4, 1), 2, Decimal('63002.25'))]. |
+
 
 ---
 
@@ -470,11 +515,20 @@ WHERE property_manager_id = 26;
 ```
 ````
 
-**Extracted SQL:** `SELECT COUNT(*) AS accommodation_count
-FROM public_marts.dim_accommodation
-WHERE property_manager_id = 26;`
+**Extracted SQL:**
 
-**Execution outcome:** Success. Columns: ['accommodation_count']. Rows (1, capped at 500): [(20,)].
+```sql
+SELECT COUNT(*) AS accommodation_count
+FROM public_marts.dim_accommodation
+WHERE property_manager_id = 26;
+```
+
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_count']` | [(20,)]. |
+
 
 ---
 

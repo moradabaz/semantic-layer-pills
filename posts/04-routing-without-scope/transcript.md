@@ -67,7 +67,10 @@ ORDER BY total_revpan DESC;
 This query aggregates the **RevPAN** (`revpan` in `mart_kpi`) for every accommodation owned by property manager **20**, returning the total revenue per accommodation (optionally including its type, city, and country).
 ````
 
-**Extracted SQL:** `SELECT  d.accommodation_id,
+**Extracted SQL:**
+
+```sql
+SELECT  d.accommodation_id,
         d.accommodation_type,
         d.city,
         d.country,
@@ -80,12 +83,15 @@ GROUP BY d.accommodation_id,
          d.accommodation_type,
          d.city,
          d.country
-ORDER BY total_revpan DESC;`
+ORDER BY total_revpan DESC;
+```
 
-**Execution outcome:** Postgres error: column k.revpand does not exist
-LINE 5:         SUM(k.revpand) AS total_revpan
-                    ^
-HINT:  Perhaps you meant to reference the column "k.revpan".
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Error | Postgres error: column k.revpand does not exist LINE 5:         SUM(k.revpand) AS total_revpan ^ HINT:  Perhaps you meant to reference the column "k.revpan". |
+
 
 
 ---
@@ -96,9 +102,18 @@ HINT:  Perhaps you meant to reference the column "k.revpan".
 
 **Matched question_type:** (none -- fallback)
 
-**Extracted SQL:** (none)
+**Extracted SQL:**
 
-**Execution outcome:** I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from?
+```sql
+-- No SQL extracted from the model response.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Fallback | I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from? |
+
 
 ---
 
@@ -161,7 +176,10 @@ WHERE
 ```
 ````
 
-**Extracted SQL:** `-- Occupancy rate for property manager 9 in August 2026
+**Extracted SQL:**
+
+```sql
+-- Occupancy rate for property manager 9 in August 2026
 SELECT
     AVG(k.occupancy_rate_pct) AS occupancy_rate_pct
 FROM
@@ -172,9 +190,15 @@ JOIN
 WHERE
     d.property_manager_id = 9
     AND k.month >= DATE '2026-08-01'
-    AND k.month <  DATE '2026-09-01';`
+    AND k.month <  DATE '2026-09-01';
+```
 
-**Execution outcome:** Success. Columns: ['occupancy_rate_pct']. Rows (1, capped at 500): [(Decimal('11.1300000000000000'),)].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['occupancy_rate_pct']` | [(Decimal('11.1300000000000000'),)]. |
+
 
 ---
 
@@ -210,9 +234,18 @@ I’m sorry, but the only table I have access to (`public_marts.mart_kpi`) does 
 If you have another table that holds the daily cost per accommodation and you can share its schema, I can write a query that joins to it to return the accommodations whose ADR is lower than the normalized daily cost.
 ```
 
-**Extracted SQL:** (none)
+**Extracted SQL:**
 
-**Execution outcome:** No SQL extracted from the model's response.
+```sql
+-- No SQL extracted from the model response.
+```
+
+**Execution outcome:**
+
+| Estado | Detalle |
+|---|---|
+| Sin SQL | No SQL extracted from the model's response. |
+
 
 ---
 
@@ -291,7 +324,10 @@ This query:
 4. Returns the month that had the highest number of cancelled reservations along with that month's cancelled count and the corresponding lost revenue.
 ````
 
-**Extracted SQL:** `-- Month with the highest number of cancelled reservations
+**Extracted SQL:**
+
+```sql
+-- Month with the highest number of cancelled reservations
 -- and the associated lost revenue
 WITH cancelled_counts AS (
     SELECT
@@ -315,9 +351,15 @@ FROM cancelled_counts cc
 JOIN lost_rev_by_month lr ON cc.month = lr.month
 WHERE cc.cancelled_count = (
     SELECT MAX(cancelled_count) FROM cancelled_counts
-);`
+);
+```
 
-**Execution outcome:** Success. Columns: ['month', 'cancelled_count', 'lost_revenue']. Rows (15, capped at 500): [(datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 5, 1), 2, Decimal('58223.90')), (datetime.date(2026, 8, 1), 2, Decimal('44628.81')), (datetime.date(2025, 10, 1), 2, Decimal('46164.30')), (datetime.date(2025, 9, 1), 2, Decimal('51502.68')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2025, 11, 1), 2, Decimal('49429.03')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 4, 1), 2, Decimal('63002.25'))].
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['month', 'cancelled_count', 'lost_revenue']` | [(datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 2, 1), 2, Decimal('62284.22')), (datetime.date(2026, 5, 1), 2, Decimal('58223.90')), (datetime.date(2026, 8, 1), 2, Decimal('44628.81')), (datetime.date(2025, 10, 1), 2, Decimal('46164.30')), (datetime.date(2025, 9, 1), 2, Decimal('51502.68')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2025, 11, 1), 2, Decimal('49429.03')), (datetime.date(2026, 7, 1), 2, Decimal('53587.96')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 3, 1), 2, Decimal('57924.50')), (datetime.date(2026, 1, 1), 2, Decimal('61605.58')), (datetime.date(2026, 4, 1), 2, Decimal('63002.25'))]. |
+
 
 ---
 
@@ -358,11 +400,20 @@ WHERE property_manager_id = 26;
 ```
 ````
 
-**Extracted SQL:** `SELECT COUNT(*) AS accommodation_count
-FROM public_marts.dim_accommodation
-WHERE property_manager_id = 26;`
+**Extracted SQL:**
 
-**Execution outcome:** Success. Columns: ['accommodation_count']. Rows (1, capped at 500): [(20,)].
+```sql
+SELECT COUNT(*) AS accommodation_count
+FROM public_marts.dim_accommodation
+WHERE property_manager_id = 26;
+```
+
+**Execution outcome:**
+
+| Estado | Columnas | Filas devueltas |
+|---|---|---|
+| Success | `['accommodation_count']` | [(20,)]. |
+
 
 ---
 
