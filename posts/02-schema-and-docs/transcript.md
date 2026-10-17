@@ -344,3 +344,14 @@ WHERE property_manager_id = 26;`
 **Execution outcome:** Success. Columns: ['num_accommodations']. Rows (1, capped at 500): [(20,)].
 
 ---
+
+## Resultados en tabla
+
+| Pregunta | Columnas devueltas | Resultado visible |
+|---|---|---|
+| 1. RevPAN del manager 20 | `accommodation_id`, `total_revpan` | 20 filas; máximo: 220 → 1006.01 |
+| 2. Cancelaciones del alojamiento 15 | `cancelled_count` | **1** |
+| 3. Ocupación del manager 9 en agosto 2026 | `occupancy_rate_pct` | **11.13%** |
+| 4. ADR menor que coste normalizado | `accommodation_id`, `lifetime_total_cost`, `available_nights_last_3_mth`, `normalised_daily_cost`, `avg_adr_last_3_mth` | **0 filas** |
+| 5. Mes con más cancelaciones | `month_start`, `cancelled_cnt`, `lost_rev` | **2026-01-01 · 45 · 61,605.58** |
+| 6. Alojamientos del manager 26 | `num_accommodations` | **20** |

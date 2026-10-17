@@ -269,3 +269,14 @@ FROM dev;`
 **Execution outcome:** I don't have a defined routing rule for this question. Can you rephrase it in terms of occupancy, revenue, ADR/RevPAN, cancellations, or accommodation counts -- or tell me which table/mart you'd expect this to come from?
 
 ---
+
+## Resultados en tabla
+
+| Pregunta | Routing | Resultado visible |
+|---|---|---|
+| 1. Longitud media de estancia | Fallback | No hay regla de routing definida |
+| 2. Antelación media de reserva | Fallback | No hay regla de routing definida |
+| 3. Mayor tasa de cancelación por canal | `cancellation_rate` | No existe `channel` en la tabla; SQL inválido y error de sintaxis |
+| 4. Ocupación por temporada | `seasonality` | HIGH: 11,068 noches y 2,592,100 reservas; LOW: 23,171 noches y 11,417,641 reservas; mayor en **Low Season** |
+| 5. Reglas de ocupación vs cancelaciones | `occupancy` | Correlación: **-0.2623745766771795795** |
+| 6. Capital de Francia | Fallback | No hay regla de routing definida |

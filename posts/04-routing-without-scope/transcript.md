@@ -365,3 +365,14 @@ WHERE property_manager_id = 26;`
 **Execution outcome:** Success. Columns: ['accommodation_count']. Rows (1, capped at 500): [(20,)].
 
 ---
+
+## Resultados en tabla
+
+| Pregunta | Estado | Resultado visible |
+|---|---|---|
+| 1. RevPAN del manager 20 | Error SQL | `column k.revpand does not exist` |
+| 2. Cancelaciones del alojamiento 15 | Fallback | No había regla de routing |
+| 3. Ocupación del manager 9 en agosto 2026 | Éxito | **11.13%** |
+| 4. ADR menor que coste normalizado | Sin SQL | No se produjo una consulta ejecutable |
+| 5. Mes con más cancelaciones | Fan-out | 15 filas; ejemplo: 2026-04-01 → 2 · 63,002.25 |
+| 6. Alojamientos del manager 26 | Éxito | **20** |
